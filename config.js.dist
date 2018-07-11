@@ -3,6 +3,7 @@ const path = require('path');
 
 module.exports = {
     docker: {
+        // this parameter also limits how many docker containers can be created simultaneously
         ports: [3001, 3002, 3003],
         image: 'browserless/chrome:release-puppeteer-1.5.0'
     },

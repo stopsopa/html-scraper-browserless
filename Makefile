@@ -1,6 +1,8 @@
-start: kill
-	# /bin/bash kill.sh && node server.js --port 8811 --tmp tmp/ -- force port from cli
-	/bin/bash kill.sh && node server.js
+start: kill stop
+	/bin/bash start.sh
+
+stop:
+	/bin/bash kill-process.sh html-scraper-browserless
 
 install:
 	# https://github.com/GoogleChrome/puppeteer/issues/244#issuecomment-364222174

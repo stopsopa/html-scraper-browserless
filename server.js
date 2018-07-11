@@ -230,9 +230,7 @@ app.use((req, res) => {
 
             res.statusCode = 401;
             res.setHeader('WWW-Authenticate', 'Basic realm="User and password please"')
-            res.end('Access denied');
-
-            return next();
+            return res.end('Access denied');
         }
 
         const jsonResponse = json => {
@@ -274,9 +272,7 @@ app.use((req, res) => {
 
             res.setHeader('Content-type', 'text/html; charset=UTF-8');
 
-            res.end(`The only endpoint handled is <a href="/generate">/generate</a>`);
-
-            return next();
+            return res.end(`The only endpoint handled is <a href="/generate">/generate</a>`);
         }
 
         let sel;
