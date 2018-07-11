@@ -411,7 +411,7 @@ docker run -d --rm --name ${container} -v "${__dirname}:/var/app/runtime" --shm-
 
                                                 generalError = purl + ':2:' + (e || '').toString();
 
-                                                return stop(container, 'scrap', e).then(() => ports.release(port));
+                                                return stop(container, 'scrap 1', e).then(() => ports.release(port));
                                             }
                                         }
 
@@ -441,7 +441,9 @@ docker run -d --rm --name ${container} -v "${__dirname}:/var/app/runtime" --shm-
 
                                         res.end(await scrap());
 
-                                        generalError = false;
+                                        setTimeout(() => {
+                                            generalError = false;
+                                        }, 3000);
 
                                         return stop(container, 'success').then(() => ports.release(port));
                                     }
@@ -449,13 +451,13 @@ docker run -d --rm --name ${container} -v "${__dirname}:/var/app/runtime" --shm-
 
                                         generalError = purl + ':3:' + (e || '').toString();
 
-                                        return stop(container, 'puppeteer.connect', e).then(() => ports.release(port));
+                                        return stop(container, 'puppeteer.connect 1', e).then(() => ports.release(port));
                                     }
                                 }, e => {
 
                                     generalError = purl + ':4:' + (e || '').toString();
 
-                                    return stop(container, 'puppeteer.connect', e).then(() => ports.release(port));
+                                    return stop(container, 'puppeteer.connect 2', e).then(() => ports.release(port));
                                 })
                             ;
                         }, 1000);
