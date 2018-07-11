@@ -1,7 +1,8 @@
 
 module.exports = {
     docker: {
-        ports: [3001, 3002, 3003]
+        ports: [3001, 3002, 3003],
+        image: 'browserless/chrome:release-puppeteer-1.5.0'
     },
     basicAuth: {
         name: 'admin',

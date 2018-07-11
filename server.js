@@ -344,7 +344,7 @@ app.use((req, res) => {
                     const container = `pup-pdf-${un.uniq}`;
 
                     const dockerrun = `
-docker run -d --rm --name ${container} -v "${__dirname}:/var/app/runtime" --shm-size=1gb -p ${port}:3000 browserless/chrome:test > /dev/null               
+docker run -d --rm --name ${container} -v "${__dirname}:/var/app/runtime" --shm-size=1gb -p ${port}:3000 ${config.docker.image} > /dev/null               
                     `.trim();
 
                     tl(dockerrun);
