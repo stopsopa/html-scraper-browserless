@@ -25,7 +25,7 @@ Just visit:
     
 # Ping:
     
-    http://xx.xx.xx.xx:8811/pdf-generator-check 
+    http://xx.xx.xx.xx:8811/html-scraper-ping
     http://slowwly.robertomurray.co.uk/delay/32000/url/https://github.com/stopsopa/docker-puppeteer-pdf-generator
     
 # Useful things (irrelevant now):  
