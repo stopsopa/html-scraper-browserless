@@ -35,14 +35,14 @@ process.on("unhandledRejection", async (reason, p) => {
 
 });
 
-let port = args.get('port');
+let port = args.get('port') || config.port;
 
 if ( ! port ) {
 
-    throw `No port specified --port 7778`;
+    throw `No port specified --port 8811`;
 }
 
-let tmp = args.get('tmp');
+let tmp = args.get('tmp') || config.tmp;
 
 if ( ! tmp ) {
 

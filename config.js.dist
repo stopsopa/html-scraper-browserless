@@ -1,4 +1,6 @@
 
+const path = require('path');
+
 module.exports = {
     docker: {
         ports: [3001, 3002, 3003],
@@ -9,6 +11,8 @@ module.exports = {
         password: 'password'
     },
     timeout: 15000,
+    port: 8811,
+    tmp: path.resolve(__dirname, 'tmp'),
     defaults: {
         launch: {
 

@@ -1,16 +1,6 @@
-start: stop
-	# specify exact command to run from 'this' directory perspective
-	/bin/bash make/start.sh /bin/bash run.sh
-
-stop:
-	# FLAG - name of variable with flag
-	# .env - (optional) file with config to load to provide FLAG
-	/bin/bash make/stop.sh FLAG .env
-
-status:
-	# FLAG - name of variable with flag
-	# .env - (optional) file with config to load to provide FLAG
-	/bin/bash make/status.sh FLAG .env
+start: kill
+	# /bin/bash kill.sh && node server.js --port 8811 --tmp tmp/ -- force port from cli
+	/bin/bash kill.sh && node server.js
 
 install:
 	# https://github.com/GoogleChrome/puppeteer/issues/244#issuecomment-364222174
