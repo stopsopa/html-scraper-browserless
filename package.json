@@ -1,0 +1,67 @@
+{
+  "_from": "bash-make-lifecycle@latest",
+  "_id": "bash-make-lifecycle@1.0.36",
+  "_inBundle": false,
+  "_integrity": "sha512-0c//5vl+VZ38FfJeyG1AaWSYMbPKxWCDrWACYu2ubeu/3R/SiSE2hZF+nVXfLDKbBA4Qvzd71dPg9oYEdSBziQ==",
+  "_location": "/bash-make-lifecycle",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "bash-make-lifecycle@latest",
+    "name": "bash-make-lifecycle",
+    "escapedName": "bash-make-lifecycle",
+    "rawSpec": "latest",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/bash-make-lifecycle/-/bash-make-lifecycle-1.0.36.tgz",
+  "_shasum": "3be06352d0044fa685af5958ee096892bbc83757",
+  "_spec": "bash-make-lifecycle@latest",
+  "_where": "/Users/sd/Workspace/projects/html-scraper-browserless/runtime",
+  "author": {
+    "name": "Szymon Dzialowski"
+  },
+  "bin": {
+    "bash-make-lifecycle": "./install.js"
+  },
+  "bugs": {
+    "url": "https://github.com/stopsopa/bash-make-lifecycle/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "basic-auth": "^2.0.0",
+    "express": "^4.16.3",
+    "forever": "^0.15.3",
+    "puppeteer": "^1.5.0",
+    "raw-body": "^2.3.3",
+    "shelljs": "^0.8.2"
+  },
+  "deprecated": false,
+  "description": "[![Build Status](https://travis-ci.org/stopsopa/bash-make-lifecycle.svg?branch=master)](https://travis-ci.org/stopsopa/bash-make-lifecycle)",
+  "devDependencies": {},
+  "directories": {
+    "test": "test"
+  },
+  "homepage": "https://github.com/stopsopa/bash-make-lifecycle#readme",
+  "keywords": [
+    "make",
+    "start",
+    "stop",
+    "script"
+  ],
+  "license": "MIT",
+  "main": "install.js",
+  "name": "bash-make-lifecycle",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stopsopa/bash-make-lifecycle.git"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "version": "1.0.36"
+}
