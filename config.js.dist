@@ -12,8 +12,9 @@ module.exports = {
         password: 'password'
     },
     timeout: 15000,
+    connectTimeout: 5000, // must be smaller than timeout
     port: 8811,
-    tmp: path.resolve(__dirname, 'tmp'),
+    tmp: path.resolve(__dirname, 'tmp'), // will be used in pdf generator (probably)
     defaults: {
         launch: {
 
@@ -33,19 +34,5 @@ module.exports = {
             },
             scale: 0.7,
         },
-        // pdf : {
-        //
-        //     format: 'letter',
-        //     displayHeaderFooter: true,
-        //     footerTemplate:  '<style>body {color: red;}h1{font-size: 12px;}</style><h1>Page <span class="pageNumber"></span> of <span class="totalPages"></span></h1>',
-        //
-        //         scale: 0.7,
-        //     margin: {
-        //         top: '100px',
-        //         right: '20px',
-        //         bottom: '100px',
-        //         left: '20px'
-        //     },
-        // }
     },
 }

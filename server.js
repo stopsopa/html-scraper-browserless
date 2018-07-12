@@ -11,8 +11,6 @@ const auth      = require('basic-auth');
 
 const shelljs   = require('shelljs');
 
-const puppeteer = require('puppeteer');
-
 const config = require(path.resolve(__dirname, 'config'));
 
 const ports = require('./lib/ports')(config.docker.ports);
@@ -24,6 +22,8 @@ const args = require(path.resolve(__dirname, 'lib', 'args'))();
 const tlog = require(path.resolve(__dirname, 'lib', 'tlog'));
 
 const type = require(path.resolve(__dirname, 'lib', 'type'));
+
+const connect = require(path.resolve(__dirname, 'lib', 'connect'));
 
 const parserParams = require(path.resolve(__dirname, 'lib', 'parserParams'));
 
@@ -253,14 +253,14 @@ app.use((req, res) => {
             return jsonResponse({
                 error: cause,
                 promise: 'then',
-                e: (e || '').toString()
+                e: ( (e || '').toString() === "[object Object]") ? e : (e || '').toString(),
             });
         }, ee => {
             return jsonResponse({
                 error: 'code != 0',
                 promise: 'catch',
-                e: (e || '').toString(),
-                ee: (ee || '').toString(),
+                e: ( (e || '').toString() === "[object Object]") ? e : (e || '').toString(),
+                ee: ( (ee || '').toString() === "[object Object]") ? ee : (ee || '').toString(),
             });
         });
 
@@ -378,89 +378,78 @@ docker run -d --rm --name ${container} -v "${__dirname}:/var/app/runtime" --shm-
                             return stop(container, 'code != 0').then(() => ports.release(port))
                         }
 
-                        const browserWSEndpoint = `ws://localhost:${port}`;
+                        connect(port, config.connectTimeout, tl).then(async browser => {
 
-                        tl('browserWSEndpoint: ' + browserWSEndpoint)
+                            try {
 
-                        setTimeout(() => {
+                                const file = un.file;
 
-                            puppeteer.connect({
-                                browserWSEndpoint
-                            })
-                                .then(async browser => {
+                                const page = await browser.newPage();
+
+                                const scrap = async () => {
 
                                     try {
 
-                                        const file = un.file;
+                                        tl(`before page.content()`);
 
-                                        const page = await browser.newPage();
+                                        const html = await page.content();
 
-                                        const scrap = async () => {
+                                        tl(`after page.content()`);
 
-                                            try {
-
-                                                tl(`before page.content()`);
-
-                                                const html = await page.content();
-
-                                                tl(`after page.content()`);
-
-                                                return html + '';
-                                            }
-                                            catch (e) {
-
-                                                generalError = purl + ':2:' + (e || '').toString();
-
-                                                return stop(container, 'scrap 1', e).then(() => ports.release(port));
-                                            }
-                                        }
-
-                                        page.setDefaultNavigationTimeout(config.timeout);
-
-                                        // process.on("unhandledRejection", async (reason, p) => {
-                                        //
-                                        //     process.stdout.write("unhandledRejection: Unhandled Promise Rejection, message: >>>" + JSON.stringify(reason.message)+"<<<\n");
-                                        //
-                                        //     return await scrap();
-                                        // });
-
-                                        const waitUntil = [
-                                            'load',
-                                            'domcontentloaded',
-                                            'networkidle0',
-                                            'networkidle2',
-                                        ]
-
-                                        tl(`before goto ${purl}`);
-
-                                        await page.goto(purl, { waitUntil });
-
-                                        tl(`before regular scrap`);
-
-                                        res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-
-                                        res.end(await scrap());
-
-                                        setTimeout(() => {
-                                            generalError = false;
-                                        }, 3000);
-
-                                        return stop(container, 'success').then(() => ports.release(port));
+                                        return html + '';
                                     }
                                     catch (e) {
 
-                                        generalError = purl + ':3:' + (e || '').toString();
+                                        generalError = purl + ':2:' + (e || '').toString();
 
-                                        return stop(container, 'puppeteer.connect 1', e).then(() => ports.release(port));
+                                        return stop(container, 'scrap 1', e).then(() => ports.release(port));
                                     }
-                                }, e => {
+                                }
 
-                                    generalError = purl + ':4:' + (e || '').toString();
+                                page.setDefaultNavigationTimeout(config.timeout);
 
-                                    return stop(container, 'puppeteer.connect 2', e).then(() => ports.release(port));
-                                })
-                            ;
-                        }, 1000);
+                                // process.on("unhandledRejection", async (reason, p) => {
+                                //
+                                //     process.stdout.write("unhandledRejection: Unhandled Promise Rejection, message: >>>" + JSON.stringify(reason.message)+"<<<\n");
+                                //
+                                //     return await scrap();
+                                // });
+
+                                const waitUntil = [
+                                    'load',
+                                    'domcontentloaded',
+                                    'networkidle0',
+                                    'networkidle2',
+                                ]
+
+                                tl(`before goto ${purl}`);
+
+                                await page.goto(purl, { waitUntil });
+
+                                tl(`before regular scrap`);
+
+                                res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+
+                                res.end(await scrap());
+
+                                setTimeout(() => {
+                                    generalError = false;
+                                }, 3000);
+
+                                return stop(container, 'success').then(() => ports.release(port));
+                            }
+                            catch (e) {
+
+                                generalError = purl + ':3:' + (e || '').toString();
+
+                                return stop(container, 'puppeteer.connect 1', e).then(() => ports.release(port));
+                            }
+                        }, e => {
+
+                            generalError = purl + ':4:' + (e || '').toString();
+
+                            return stop(container, 'puppeteer.connect 2', e).then(() => ports.release(port));
+                        });
                     });
 
                 });
