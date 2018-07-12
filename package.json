@@ -21,7 +21,6 @@
   "_resolved": "https://registry.npmjs.org/bash-make-lifecycle/-/bash-make-lifecycle-1.0.36.tgz",
   "_shasum": "3be06352d0044fa685af5958ee096892bbc83757",
   "_spec": "bash-make-lifecycle@latest",
-  "_where": "/Users/sd/Workspace/projects/html-scraper-browserless/runtime",
   "author": {
     "name": "Szymon Dzialowski"
   },

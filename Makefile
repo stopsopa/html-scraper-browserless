@@ -2,7 +2,10 @@ start: kill stop
 	/bin/bash start.sh
 
 stop:
-	/bin/bash kill-process.sh html-scraper-browserless
+	/bin/bash kill-process.sh html-scraper-browserless-executed-by-make
+
+status:
+	/bin/bash server-is-working.sh html-scraper-browserless-executed-by-make
 
 install:
 	# https://github.com/GoogleChrome/puppeteer/issues/244#issuecomment-364222174
