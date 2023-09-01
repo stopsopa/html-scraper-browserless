@@ -1,6 +1,9 @@
 # Deprecated
 (Deprecated -> use better https://github.com/stopsopa/html-scraper-browserless) Microservice tool to scraping html from "any" page
 
+I wouldn't suggest it now - it's just old. But I'll leave it here.
+
+
 
 
 # Installation:
